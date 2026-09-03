@@ -657,7 +657,7 @@ function aramkitHTML(data){
 function junzeHTML(builds){
   if(!builds || !builds.length) return '';
   const newest = builds[0]||{};
-  let h = `<div class="cn-source-head">✨ Build độc lạ theo lõi đặc biệt
+  let h = `<div class="cn-source-head">✨ Tham khảo thêm · Build độc lạ theo lõi đặc biệt
     <span class="src-tag">JunzeLabs · cộng đồng Trung Quốc · Patch ${esc(newest.patch||'?')} · ${esc(newest.data_date||'')}</span></div>`;
   for(const build of builds){
     const name = build.archetype_vi || build.archetype_cn || 'Build đặc biệt';
@@ -714,11 +714,7 @@ function champHTML(c){
     <span class="patch-pill">Patch ${esc(META.ddragon_version||'')}</span></div>
     <div class="header-actions"><button class="copy-link" onclick="copyCurrent()">↗ Sao chép link</button></div></div>`;
 
-  h += quickHTML(c);
-
-  if(c.junze_builds && c.junze_builds.length) h += junzeHTML(c.junze_builds);
-  if(c.aramkit) h += aramkitHTML(c.aramkit);
-
+  // Phương án build là nội dung chính: đặt ngay đầu trang theo thứ tự ưu tiên UX.
   if(c.build_plans.length){
     h += `<div class="section-title">Phương án build</div>`;
     for(const b of c.build_plans){
@@ -746,8 +742,13 @@ function champHTML(c){
     }
     h += `</div>`;
   }
+  // Các lớp dữ liệu bổ sung nằm sau phương án chính; build độc lạ luôn ở cuối
+  // vì chỉ dùng để tham khảo thêm, không lấn át gợi ý cốt lõi.
+  h += quickHTML(c);
+  if(c.aramkit) h += aramkitHTML(c.aramkit);
   if(c.ali213 && c.ali213.length) h += aliHTML(c.ali213);
   if(c.playaram) h += playaramHTML(c.playaram);
+  if(c.junze_builds && c.junze_builds.length) h += junzeHTML(c.junze_builds);
   if(!c.build_plans.length && !c.recommended_augments.length && !c.playaram && !c.aramkit &&
      !(c.junze_builds&&c.junze_builds.length) && !(c.ali213&&c.ali213.length))
     h += `<div class="empty">Chưa có dữ liệu build cho tướng này.</div>`;
