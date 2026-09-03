@@ -51,6 +51,7 @@
   .cheader .cn{color:var(--dim);font-size:13px;margin-top:2px}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
     padding:15px 17px;margin-bottom:14px}
+  .plan-card{padding:14px 15px}
   .plan-hd{display:flex;gap:10px;align-items:center}
   .grade{font-weight:800;font-size:13px;min-width:30px;text-align:center;padding:3px 8px;border-radius:7px}
   .grade.S,.grade.SS{background:var(--s);color:#fff;box-shadow:0 0 12px #e5484d55}
@@ -58,6 +59,26 @@
   .grade.B,.grade.C{background:var(--b);color:#062411}
   .plan-name{font-weight:700;font-size:15px}
   .desc{color:var(--dim);font-size:13px;margin:8px 0 4px;font-style:italic}
+  .plan-desc{margin:8px 0 2px;color:var(--dim)}
+  .plan-desc summary{display:flex;align-items:center;gap:8px;min-width:0;cursor:pointer;list-style:none}
+  .plan-desc summary::-webkit-details-marker{display:none}
+  .plan-desc-preview{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+    font-size:12px;font-style:italic}
+  .plan-desc-toggle{flex:0 0 auto;color:var(--accent);font-size:10px;font-style:normal;font-weight:750}
+  .plan-desc-toggle::before{content:'Xem thêm'}
+  .plan-desc[open] .plan-desc-preview{display:none}
+  .plan-desc[open] .plan-desc-toggle::before{content:'Thu gọn'}
+  .plan-desc[open] .desc{margin:7px 0 2px;line-height:1.55}
+  .plan-layout{display:grid;grid-template-columns:minmax(175px,.28fr) minmax(0,1fr);gap:16px;align-items:start}
+  .plan-layout.no-core{grid-template-columns:1fr}
+  .plan-core,.plan-loadout{min-width:0}
+  .plan-layout .sub{margin-top:12px}
+  .alt-plans{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:9px 0 14px;padding:9px 11px;
+    border:1px solid #263d4b;border-radius:11px;background:#0b171f}
+  .alt-plans-label{color:var(--dim);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.55px}
+  .alt-plan{display:inline-flex;align-items:center;gap:6px;min-width:0;padding:5px 9px;border:1px solid var(--line);
+    border-radius:9px;background:var(--panel2);font-size:11px;font-weight:700}
+  .alt-plan .grade{min-width:21px;padding:2px 5px;font-size:9px}
   .sub{font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;
     margin:12px 0 7px;font-weight:600}
   .chips{display:flex;flex-wrap:wrap;gap:7px}
@@ -78,19 +99,25 @@
   .tier-lbl.silver{color:#0a0d12;background:var(--silver)}
   .tier-lbl.gold{color:#1a1205;background:var(--gold)}
   .tier-lbl.prismatic{color:#052027;background:var(--prismatic)}
-  .locked{font-size:11px;color:var(--dim);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line)}
+  .locked{font-size:10px;color:var(--dim)}
   .empty{color:var(--dim);padding:60px 20px;text-align:center}
   .eff{margin:6px 0 0;color:var(--txt);line-height:1.6}
   .badge-tier{display:inline-block;font-weight:800;font-size:12px;padding:2px 10px;border-radius:6px;vertical-align:middle}
   .mt{color:var(--dim);font-size:10px;font-weight:600;letter-spacing:.3px;
     margin-left:7px;padding:1px 6px;border:1px solid var(--line);border-radius:5px;vertical-align:middle}
   .gold{color:var(--gold);font-weight:700}
-  .items{margin-top:2px}
-  .item-row{display:flex;align-items:center;gap:10px;padding:5px 0}
-  .item-num{color:var(--dim);font-weight:800;width:18px;text-align:right;flex-shrink:0;font-size:13px}
-  .item-row img{width:32px;height:32px;border-radius:7px;background:#0d1117;flex-shrink:0}
-  .item-name{flex:1;font-weight:500}
-  .total{color:var(--dim);font-size:12px;margin-top:9px;padding-top:8px;border-top:1px dashed var(--line)}
+  .items{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:2px}
+  .item-row{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;
+    align-items:center;column-gap:8px;min-width:0;padding:8px 9px;border:1px solid #233947;border-radius:10px;
+    background:#0a151d}
+  .item-num{position:absolute;left:3px;top:3px;display:grid;place-items:center;width:16px;height:16px;
+    border-radius:5px;background:#203541;color:#c5d5de;font-weight:850;font-size:9px;z-index:1}
+  .item-row img{grid-row:1/3;width:36px;height:36px;border-radius:8px;background:#0d1117;flex-shrink:0}
+  .item-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;font-weight:700}
+  .item-row .gold{font-size:10px;line-height:1.1}
+  .build-foot{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:8px;
+    flex-wrap:wrap;margin-top:2px;padding-top:8px;border-top:1px dashed var(--line)}
+  .total{color:var(--dim);font-size:11px}
   .hint{color:var(--dim);font-size:11px;margin-top:5px}
   /* --- playaram.gg: dữ liệu thực chiến (win-rate) --- */
   .pa-title{display:flex;align-items:center;gap:9px;margin:26px 0 6px;font-size:15px;font-weight:800}
@@ -327,6 +354,13 @@
       overflow-y:auto;overscroll-behavior:contain}
     body.has-selection .detail{transform:translateX(0)}
     .detail-content{padding:0 13px 55px}
+    .plan-layout{grid-template-columns:1fr;gap:1px}
+    .items{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+    .item-row{padding:7px 8px}
+    .item-row img{width:34px;height:34px}
+    .item-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;white-space:normal;
+      line-height:1.15;max-height:2.3em}
+    .build-foot{align-items:flex-start;flex-direction:column}
     .mobile-back{position:sticky;top:0;z-index:5;display:flex;align-items:center;gap:7px;width:100%;
       margin:0 0 12px;padding:13px 2px 11px;border:0;border-bottom:1px solid var(--line);
       background:#071017ee;backdrop-filter:blur(12px);color:var(--accent);font-weight:800;cursor:pointer}
@@ -431,15 +465,17 @@ function augChip(a){
 }
 function gold(n){ return (n||0).toLocaleString('vi-VN'); }
 // Trang bị theo thứ tự nguồn liệt kê (gợi ý) + giá vàng DDragon.
-function itemsHTML(items, total){
+function itemsHTML(items, total, orderLocked=false){
   const rows = items.map((i,n)=>{
     const ic = i.image ? `<img src="${i.image}" onerror="this.style.visibility='hidden'">`
                        : '<img style="visibility:hidden">';
     const g = i.gold ? `<span class="gold">${gold(i.gold)}</span>` : '';
-    return `<div class="item-row"><span class="item-num">${n+1}</span>${ic}<span class="item-name">${nm(i)}</span>${g}</div>`;
+    return `<div class="item-row" title="${esc(i.name_vi||i.name_cn||'')}"><span class="item-num">${n+1}</span>${ic}<span class="item-name">${nm(i)}</span>${g}</div>`;
   }).join('');
-  const t = total ? `<div class="total">Tổng ≈ <span class="gold">${gold(total)} vàng</span> · thứ tự là <b>gợi ý theo nguồn</b> (không phải thứ tự mua chính thức).</div>` : '';
-  return `<div class="items">${rows}${t}</div>`;
+  const t = total ? `<span class="total">Tổng ≈ <span class="gold">${gold(total)} vàng</span> · thứ tự gợi ý theo nguồn</span>` : '';
+  const lock = orderLocked ? `<span class="locked">🔒 Thứ tự mua chính xác & pool thay thế bị khoá sau WeChat.</span>` : '';
+  const foot = (t||lock) ? `<div class="build-foot">${t}${lock}</div>` : '';
+  return `<div class="items">${rows}${foot}</div>`;
 }
 // Nhãn "dịch tự động" cho chuỗi không có bản Riot (tên build, mô tả chiến thuật).
 function mtHTML(vi, cn){
@@ -717,19 +753,29 @@ function champHTML(c){
   // Phương án build là nội dung chính: đặt ngay đầu trang theo thứ tự ưu tiên UX.
   if(c.build_plans.length){
     h += `<div class="section-title">Phương án build</div>`;
-    for(const b of c.build_plans){
-      h += `<div class="card"><div class="plan-hd">
+    const detailedPlans = c.build_plans.filter(b=>b.desc_vi||b.desc_cn||b.augments.length||b.items.length);
+    const namedOnlyPlans = c.build_plans.filter(b=>!(b.desc_vi||b.desc_cn||b.augments.length||b.items.length));
+    for(const b of detailedPlans){
+      h += `<div class="card plan-card"><div class="plan-hd">
         <span class="grade ${b.grade}">${esc(b.grade)}</span>
         <span class="plan-name">${mtHTML(b.name_vi, b.name_cn)}</span></div>`;
-      if(b.desc_vi||b.desc_cn) h += `<div class="desc">“${mtHTML(b.desc_vi, b.desc_cn)}”</div>`;
-      if(b.augments.length)
-        h += `<div class="sub">Lõi cốt lõi</div><div class="chips">${b.augments.map(augChip).join('')}</div>`;
-      if(b.items.length){
-        h += `<div class="sub">Trang bị cốt lõi (thứ tự gợi ý)</div>${itemsHTML(b.items, b.gold_total)}`;
-        if(b.item_order_locked)
-          h += `<div class="locked">🔒 Thứ tự mua chính xác & pool item thay thế bị khoá sau mini program WeChat.</div>`;
+      if(b.desc_vi||b.desc_cn){
+        const description = mtHTML(b.desc_vi, b.desc_cn);
+        h += `<details class="plan-desc"><summary><span class="plan-desc-preview">“${description}”</span>
+          <span class="plan-desc-toggle"></span></summary><div class="desc">“${description}”</div></details>`;
       }
-      h += `</div>`;
+      h += `<div class="plan-layout${b.augments.length?'':' no-core'}">`;
+      if(b.augments.length)
+        h += `<div class="plan-core"><div class="sub">Lõi cốt lõi</div><div class="chips">${b.augments.map(augChip).join('')}</div></div>`;
+      if(b.items.length){
+        h += `<div class="plan-loadout"><div class="sub">Trang bị cốt lõi · thứ tự gợi ý</div>${itemsHTML(b.items, b.gold_total, b.item_order_locked)}</div>`;
+      }
+      h += `</div></div>`;
+    }
+    if(namedOnlyPlans.length){
+      h += `<div class="alt-plans"><span class="alt-plans-label">Hướng khác</span>${namedOnlyPlans.map(b=>
+        `<span class="alt-plan"><span class="grade ${b.grade}">${esc(b.grade)}</span><span>${mtHTML(b.name_vi,b.name_cn)}</span></span>`
+      ).join('')}</div>`;
     }
   }
   if(c.recommended_augments.length){
