@@ -276,6 +276,11 @@
   .quick-label{margin-bottom:8px;color:var(--dim);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.55px}
   .quick-value{display:flex;align-items:center;gap:7px;flex-wrap:wrap;font-weight:750}
   .quick-value img{width:34px;height:34px;border-radius:8px;background:#071017}
+  .spell-icons{display:inline-flex;align-items:center;flex:0 0 auto;padding-right:3px}
+  .spell-icons img{width:28px;height:28px;border:1px solid #496170;border-radius:7px;background:#071017;
+    box-shadow:0 3px 9px #0006}
+  .spell-icons img+img{margin-left:-6px}
+  .quick-value .spell-icons img{width:34px;height:34px;border-radius:9px}
   .quick-stat{margin-top:6px;font-size:11px;color:var(--dim)}
   .card,.ali-build{border-color:#253c4b;background:linear-gradient(145deg,#101d27,#0e1922);
     box-shadow:0 10px 28px #0002}
@@ -492,6 +497,21 @@ function paIcon(it,sm){
   return it.icon ? `<img src="${it.icon}"${sm?' style="width:24px;height:24px"':''} onerror="this.style.visibility='hidden'">`
                  : '<img style="visibility:hidden">';
 }
+const SPELL_FILES = {
+  'Tốc Biến':'SummonerFlash.png', 'Tốc Hành':'SummonerHaste.png',
+  'Đánh Dấu':'SummonerSnowball.png', 'Thiêu Đốt':'SummonerDot.png',
+  'Hồi Máu':'SummonerHeal.png', 'Lá Chắn':'SummonerBarrier.png',
+  'Thanh Tẩy':'SummonerBoost.png', 'Minh Mẫn':'SummonerMana.png',
+  'Kiệt Sức':'SummonerExhaust.png'
+};
+function spellIcons(label){
+  const icons = String(label||'').split(/\s*\+\s*/).map(name=>{
+    const file=SPELL_FILES[name];
+    return file ? `<img src="https://ddragon.leagueoflegends.com/cdn/${META.ddragon_version}/img/spell/${file}"
+      alt="${esc(name)}" title="${esc(name)}" onerror="this.style.visibility='hidden'">` : '';
+  }).join('');
+  return icons ? `<span class="spell-icons">${icons}</span>` : '';
+}
 // item lẻ trong pool/giày: chip nhỏ có tên + wr/pick
 function paItemChip(it){
   const ic = it.icon ? `<img src="${it.icon}" onerror="this.style.visibility='hidden'">` : '<img style="visibility:hidden">';
@@ -534,7 +554,7 @@ function playaramHTML(pa){
     gp += `<div class="sub">Giày</div><div class="pool" style="margin-bottom:12px">${pa.boots.map(paItemChip).join('')}</div>`;
   if(pa.spells && pa.spells.length)
     gp += `<div class="sub">Phép bổ trợ</div><div class="pool">${pa.spells.map(s=>
-      `<span class="chip plain pa-item"><span>${esc(s.name)}</span><span class="chip-stat">${paStat(s.wr,s.pick)}</span></span>`).join('')}</div>`;
+      `<span class="chip plain pa-item">${spellIcons(s.name)}<span>${esc(s.name)}</span><span class="chip-stat">${paStat(s.wr,s.pick)}</span></span>`).join('')}</div>`;
   if(gp) h += `<div class="card">${gp}</div>`;
 
   // Lõi theo win-rate (3 bậc) — bổ sung % cho phần lõi định tính của lolhaidou
@@ -675,7 +695,7 @@ function quickHTML(c){
   }
   if(spell){
     cells += `<div class="quick-cell"><div class="quick-label">Phép bổ trợ</div>
-      <div class="quick-value">${esc(spell.name||'')}</div><div class="quick-stat">${paStat(spell.wr,spell.pick)}</div></div>`;
+      <div class="quick-value">${spellIcons(spell.name)}<span>${esc(spell.name||'')}</span></div><div class="quick-stat">${paStat(spell.wr,spell.pick)}</div></div>`;
   }
   if(bestAug){
     const ic = bestAug.icon ? `<img src="${bestAug.icon}" onerror="this.remove()">` : '';
