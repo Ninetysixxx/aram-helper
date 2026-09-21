@@ -682,6 +682,7 @@ function saveLoadout(c,values){
   try{localStorage.setItem('aram:loadouts:v1',JSON.stringify([...selections]));}catch(_){showToast('Không lưu được trên máy; lựa chọn vẫn dùng trong phiên này.');}
   const detail=document.getElementById('detail'), top=detail.scrollTop;
   detail.querySelector('.detail-content').innerHTML=champHTML(c);
+  prepareImages(detail);
   detail.scrollTop=top;
 }
 function changeAugment(idx,toggle=true){
@@ -766,6 +767,9 @@ function renderList(){
   }).join('') || `<div class="empty">${libraryFilter==='saved'?'Chưa lưu mục nào phù hợp. Mở tướng/lõi rồi bấm ☆ để lưu.':libraryFilter==='recent'?'Chưa có lịch sử phù hợp. Chuyển về tất cả để bắt đầu.':'Không tìm thấy. Thử tên không dấu hoặc tên tiếng Anh.'}</div>`;
 }
 
+function prepareImages(container){
+  container.querySelectorAll('img').forEach(img=>{if(!img.hasAttribute('alt'))img.alt='';img.loading='lazy';img.decoding='async';});
+}
 function pick(idx, updateHash=true){
   const o = (mode==='champ'?DB.champions:DB.augments)[idx];
   if(!o) return;
@@ -776,7 +780,7 @@ function pick(idx, updateHash=true){
   d.scrollTop = 0;
   document.body.classList.add('has-selection');
   syncMobilePanels();
-  d.querySelectorAll('img').forEach(img=>{if(!img.hasAttribute('alt'))img.alt='';img.loading='lazy';img.decoding='async';});
+  prepareImages(d);
   d.focus({preventScroll:true});
   if(updateHash) history.replaceState(null,'',`#${mode}/${encodeURIComponent(o.slug)}`);
 }
